@@ -1,6 +1,8 @@
 # Decode Surveillance - Data Processing
 This repository covers the data processing part of Amnesty International's Decode Surveillance project. It accompanies the full methodology note.
 
+# Analysis of Crowdsourced Data
+
 ## Requirements
 
 The environment can be installed with [Miniforge/Mambaforge]. It should also run with Anaconda but this has not been test.
@@ -135,3 +137,12 @@ Columns:
 - `BoroName`: Name of the borough the specific intersection is found in, with respect to the query json from NYC.gov website.
 - `URL`: URL of the Street View panorama.
 - `ImageDate`: Date of photography of the Street View panorama.
+
+# Analysis of Stop-and-Frisk + Camera Locations
+
+See folder `analysis/` and Makefile therein.
+
+The analysis is done in Jupyter notebooks using R. Detailed installation instructions, including where to place the data files, will be uploaded at a later date, but the content of the notebooks represents the full study and allows for analysis.
+
+You will need to obtain an API key for the US Census, [available here](https://api.census.gov/data/key_signup.html), and paste it in `analysis/prepdata.R` line 8.
+
