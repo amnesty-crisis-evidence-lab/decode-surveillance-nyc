@@ -1,6 +1,8 @@
 # Decode Surveillance - Data Processing
 This repository covers the data processing part of Amnesty International's Decode Surveillance project. It accompanies the full methodology note.
 
+*Full methodology note available in [AMR5152052022EN_DecodeSurveillanceNYCMethodology.pdf](AMR5152052022EN_DecodeSurveillanceNYCMethodology.pdf)*.
+
 # Analysis of Crowdsourced Data
 
 ## Requirements
