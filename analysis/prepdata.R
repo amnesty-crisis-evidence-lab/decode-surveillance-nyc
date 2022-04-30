@@ -188,6 +188,9 @@ df1$eff_cameras_within_200m <- as.numeric(st_area(df1) / CAMERA_AREA)
 # (There are a handful that fall outside a TRACT, which are discarded by this join.)
 df2 <- st_join(camera[camera$public,], st_buffer(TRACTS[,'GEOID'], set_units(200,'m')))
 
+# Raw count of number of public cameras within the TRACT
+df3 <- st_join(camera[camera$public,], TRACTS[,'GEOID'])
+
 # Merge these various counts, and also merge in the full list of tracts
 camera_count <- merge(as.data.table(st_drop_geometry(df1))[, list(GEOID, eff_cameras_within_200m)],
                       as.data.table(st_drop_geometry(df0))[, list(GEOID, eff_cameras)],
@@ -195,7 +198,11 @@ camera_count <- merge(as.data.table(st_drop_geometry(df1))[, list(GEOID, eff_cam
 camera_count <- merge(camera_count,
                       as.data.table(st_drop_geometry(df2))[, list(cameras_within_200m=sum(attached_street_median)), by=GEOID],
                       by='GEOID', all=TRUE)
+camera_count <- merge(camera_count,
+                      as.data.table(st_drop_geometry(df3))[, list(cameras=sum(attached_street_median)), by=GEOID],
+                      by='GEOID', all=TRUE)
 camera_count[is.na(eff_cameras), eff_cameras := 0]
 camera_count[is.na(cameras_within_200m), cameras_within_200m := 0]
+camera_count[is.na(cameras), cameras := 0]
 empty_tracts <- setdiff(tracts$GEOID, camera_count$GEOID)
-camera_count <- rbind(camera_count, data.table(GEOID=empty_tracts, eff_cameras=0, eff_cameras_within_200m=0, cameras_within_200m=0))
+camera_count <- rbind(camera_count, data.table(GEOID=empty_tracts, eff_cameras=0, eff_cameras_within_200m=0, cameras_within_200m=0, cameras=0))
